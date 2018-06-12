@@ -15,25 +15,47 @@ class DJContentTableViewController: UITableViewController {
 			guard self.isViewLoaded else {
 				return
 			}
+			
+			self.loadFeeds()
 		}
 	}
 	
 	private var dataTask: URLSessionDataTask?
+	private var feedRepository: FeedRepository? {
+		didSet {
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		self.loadFeeds()
+    }
+	
+	deinit {
+		self.dataTask?.cancel()
+	}
+	
+	private func loadFeeds() {
 		guard let validUrl = self.url else {
 			return
 		}
 		
 		let navController = self.djNavContorller
+		
 		let urlSession = URLSession(configuration: .default)
 		
 		navController?.showLoading()
 		self.dataTask = urlSession.dataTask(with: validUrl, completionHandler: {[weak self] (data, _, error) in
+			guard let strongSelf = self else {
+				return
+			}
+			
 			defer {
-				self?.dataTask = nil
+				strongSelf.dataTask = nil
 				navController?.hideLoading()
 			}
 			
@@ -43,42 +65,27 @@ class DJContentTableViewController: UITableViewController {
 				return
 			}
 			
-			let stringContent = String(data: validData, encoding: .utf8)
-			
-			let xmlParser = XmlParserManager().initWithData(validData) as! XmlParserManager
-			let imageUrls = xmlParser.img as? [String]
-			let feeds = xmlParser.feeds as? [[String: String]]
-			let asd = 0
+			strongSelf.feedRepository = FeedRepository(data: validData)
 		})
 		
 		self.dataTask?.resume()
-    }
-	
-	deinit {
-		self.dataTask?.cancel()
 	}
 	
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.feedRepository?.feedItems.count ?? 0
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "shortContentCell", for: indexPath)
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -126,3 +133,4 @@ class DJContentTableViewController: UITableViewController {
     */
 
 }
+

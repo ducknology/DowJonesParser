@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -73,13 +74,65 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ba9-XB-6DL">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shortContentCell" rowHeight="95" id="ba9-XB-6DL" customClass="DJContentTableViewCell" customModule="DowJonesParser" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ba9-XB-6DL" id="QFa-a7-uFi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="94.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eu7-1B-CgP">
+                                            <rect key="frame" x="16" y="11" width="71.5" height="71.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="LcX-wE-Vd0"/>
+                                                <constraint firstAttribute="width" secondItem="eu7-1B-CgP" secondAttribute="height" multiplier="1:1" id="cEk-Qw-xrU"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Feed title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCs-by-lpc" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
+                                            <rect key="frame" x="97.5" y="11" width="235.5" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                                    <real key="value" value="24"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="bold" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="av2-sm-ytG" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
+                                            <rect key="frame" x="97.5" y="45" width="235.5" height="34"/>
+                                            <string key="text">Some very long text Some very long text Some very long text Some very long text Some very long text Some very long text Some very long text </string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                                    <real key="value" value="14"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="bold" value="NO"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="eu7-1B-CgP" firstAttribute="leading" secondItem="QFa-a7-uFi" secondAttribute="leadingMargin" id="59d-1m-tVb"/>
+                                        <constraint firstItem="av2-sm-ytG" firstAttribute="leading" secondItem="wCs-by-lpc" secondAttribute="leading" id="9qg-U6-bXN"/>
+                                        <constraint firstItem="wCs-by-lpc" firstAttribute="leading" secondItem="eu7-1B-CgP" secondAttribute="trailing" constant="10" id="IBE-AK-7hd"/>
+                                        <constraint firstItem="eu7-1B-CgP" firstAttribute="centerY" secondItem="QFa-a7-uFi" secondAttribute="centerY" id="PeQ-dG-bAD"/>
+                                        <constraint firstItem="av2-sm-ytG" firstAttribute="top" secondItem="wCs-by-lpc" secondAttribute="bottom" constant="5" id="Smk-nG-ePz"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="eu7-1B-CgP" secondAttribute="bottom" priority="998" id="Tzq-qC-REU"/>
+                                        <constraint firstItem="av2-sm-ytG" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="eu7-1B-CgP" secondAttribute="bottom" id="mAv-pL-zQw"/>
+                                        <constraint firstItem="eu7-1B-CgP" firstAttribute="top" secondItem="QFa-a7-uFi" secondAttribute="topMargin" priority="999" id="oez-FR-SDl"/>
+                                        <constraint firstItem="wCs-by-lpc" firstAttribute="top" secondItem="eu7-1B-CgP" secondAttribute="top" id="pEd-yV-TnR"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="av2-sm-ytG" secondAttribute="trailing" id="q28-Ir-9fu"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="wCs-by-lpc" secondAttribute="trailing" id="ugq-Xu-vX3"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descLabel" destination="av2-sm-ytG" id="Atc-7n-om7"/>
+                                    <outlet property="feedImage" destination="eu7-1B-CgP" id="7Bb-ix-xtH"/>
+                                    <outlet property="titleLabel" destination="wCs-by-lpc" id="rMi-Pt-niS"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -90,7 +143,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q10-72-D0X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1790" y="-134"/>
+            <point key="canvasLocation" x="1789.5999999999999" y="-134.48275862068968"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gCi-Pk-qfw">
@@ -117,10 +170,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IzI-A6-eiP">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="I18-fd-8W2">
-                                        <rect key="frame" x="177" y="313" width="20" height="20"/>
+                                        <rect key="frame" x="177" y="323" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -134,8 +187,8 @@
                         <constraints>
                             <constraint firstItem="IzI-A6-eiP" firstAttribute="leading" secondItem="JIq-Vk-7ju" secondAttribute="leading" id="1a8-zG-RJW"/>
                             <constraint firstItem="JIq-Vk-7ju" firstAttribute="trailing" secondItem="IzI-A6-eiP" secondAttribute="trailing" id="Bag-Az-xfl"/>
-                            <constraint firstItem="IzI-A6-eiP" firstAttribute="top" secondItem="JIq-Vk-7ju" secondAttribute="top" id="UCG-ME-f4o"/>
-                            <constraint firstItem="JIq-Vk-7ju" firstAttribute="bottom" secondItem="IzI-A6-eiP" secondAttribute="bottom" id="h9H-hv-575"/>
+                            <constraint firstItem="IzI-A6-eiP" firstAttribute="top" secondItem="OQn-I8-xXM" secondAttribute="top" id="UCG-ME-f4o"/>
+                            <constraint firstAttribute="bottom" secondItem="IzI-A6-eiP" secondAttribute="bottom" id="h9H-hv-575"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JIq-Vk-7ju"/>
                     </view>

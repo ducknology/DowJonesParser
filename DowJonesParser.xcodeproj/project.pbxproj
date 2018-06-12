@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E0114A1320D0512E00E30D3F /* DJContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0114A1220D0512E00E30D3F /* DJContentTableViewCell.swift */; };
 		E044EDB420CED721009066E7 /* DJMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDB320CED721009066E7 /* DJMainTableViewController.swift */; };
 		E044EDB620CED77D009066E7 /* DJNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDB520CED77D009066E7 /* DJNavigationController.swift */; };
 		E044EDB820CED834009066E7 /* DJLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDB720CED834009066E7 /* DJLoadingViewController.swift */; };
@@ -14,15 +15,17 @@
 		E044EDBC20CEDE58009066E7 /* DJViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDBB20CEDE58009066E7 /* DJViewControllerProtocol.swift */; };
 		E044EDBF20CF635A009066E7 /* DJCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDBE20CF635A009066E7 /* DJCategoryTableViewCell.swift */; };
 		E044EDC220CF7629009066E7 /* DJContentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDC120CF7629009066E7 /* DJContentTableViewController.swift */; };
-		E044EDC420CF7878009066E7 /* SimplePromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDC320CF7878009066E7 /* SimplePromise.swift */; };
-		E044EDC620CFB1BD009066E7 /* XMLParserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDC520CFB1BD009066E7 /* XMLParserManager.swift */; };
+		E04B5E5020D03B2A00B9E935 /* DJLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04B5E4F20D03B2900B9E935 /* DJLabel.swift */; };
 		E08A118820CD040E0018CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08A118720CD040E0018CC41 /* AppDelegate.swift */; };
 		E08A118D20CD040E0018CC41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E08A118B20CD040E0018CC41 /* Main.storyboard */; };
 		E08A118F20CD04100018CC41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08A118E20CD04100018CC41 /* Assets.xcassets */; };
 		E08A119220CD04100018CC41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E08A119020CD04100018CC41 /* LaunchScreen.storyboard */; };
+		E0CDD76620CFE29700E2090B /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD76520CFE29700E2090B /* FeedRepository.swift */; };
+		E0CDD76920CFE36A00E2090B /* DJRssItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD76820CFE36A00E2090B /* DJRssItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E0114A1220D0512E00E30D3F /* DJContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJContentTableViewCell.swift; sourceTree = "<group>"; };
 		E044EDB320CED721009066E7 /* DJMainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJMainTableViewController.swift; sourceTree = "<group>"; };
 		E044EDB520CED77D009066E7 /* DJNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJNavigationController.swift; sourceTree = "<group>"; };
 		E044EDB720CED834009066E7 /* DJLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJLoadingViewController.swift; sourceTree = "<group>"; };
@@ -30,14 +33,15 @@
 		E044EDBB20CEDE58009066E7 /* DJViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DJViewControllerProtocol.swift; path = DowJonesParser/BaseFramework/DJViewControllerProtocol.swift; sourceTree = SOURCE_ROOT; };
 		E044EDBE20CF635A009066E7 /* DJCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		E044EDC120CF7629009066E7 /* DJContentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJContentTableViewController.swift; sourceTree = "<group>"; };
-		E044EDC320CF7878009066E7 /* SimplePromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePromise.swift; sourceTree = "<group>"; };
-		E044EDC520CFB1BD009066E7 /* XMLParserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLParserManager.swift; sourceTree = "<group>"; };
+		E04B5E4F20D03B2900B9E935 /* DJLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJLabel.swift; sourceTree = "<group>"; };
 		E08A118420CD040E0018CC41 /* DowJonesParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DowJonesParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08A118720CD040E0018CC41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E08A118C20CD040E0018CC41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E08A118E20CD04100018CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E08A119120CD04100018CC41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E08A119320CD04100018CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0CDD76520CFE29700E2090B /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
+		E0CDD76820CFE36A00E2090B /* DJRssItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJRssItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				E044EDBE20CF635A009066E7 /* DJCategoryTableViewCell.swift */,
+				E0114A1220D0512E00E30D3F /* DJContentTableViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -65,7 +70,7 @@
 				E044EDB520CED77D009066E7 /* DJNavigationController.swift */,
 				E044EDB720CED834009066E7 /* DJLoadingViewController.swift */,
 				E044EDBB20CEDE58009066E7 /* DJViewControllerProtocol.swift */,
-				E044EDC320CF7878009066E7 /* SimplePromise.swift */,
+				E04B5E4F20D03B2900B9E935 /* DJLabel.swift */,
 			);
 			path = BaseFramework;
 			sourceTree = "<group>";
@@ -89,6 +94,7 @@
 		E08A118620CD040E0018CC41 /* DowJonesParser */ = {
 			isa = PBXGroup;
 			children = (
+				E0CDD76720CFE30900E2090B /* Models */,
 				E044EDC020CF759D009066E7 /* BaseFramework */,
 				E044EDBD20CF6319009066E7 /* Components */,
 				E08A119920CD83550018CC41 /* Utils */,
@@ -107,9 +113,17 @@
 			isa = PBXGroup;
 			children = (
 				E044EDB920CEDCCB009066E7 /* StoryboardCreatable.swift */,
-				E044EDC520CFB1BD009066E7 /* XMLParserManager.swift */,
+				E0CDD76520CFE29700E2090B /* FeedRepository.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		E0CDD76720CFE30900E2090B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E0CDD76820CFE36A00E2090B /* DJRssItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,13 +199,15 @@
 			files = (
 				E044EDBA20CEDCCB009066E7 /* StoryboardCreatable.swift in Sources */,
 				E044EDC220CF7629009066E7 /* DJContentTableViewController.swift in Sources */,
+				E04B5E5020D03B2A00B9E935 /* DJLabel.swift in Sources */,
+				E0114A1320D0512E00E30D3F /* DJContentTableViewCell.swift in Sources */,
 				E044EDB820CED834009066E7 /* DJLoadingViewController.swift in Sources */,
 				E044EDB420CED721009066E7 /* DJMainTableViewController.swift in Sources */,
 				E044EDBF20CF635A009066E7 /* DJCategoryTableViewCell.swift in Sources */,
-				E044EDC420CF7878009066E7 /* SimplePromise.swift in Sources */,
+				E0CDD76920CFE36A00E2090B /* DJRssItem.swift in Sources */,
+				E0CDD76620CFE29700E2090B /* FeedRepository.swift in Sources */,
 				E044EDBC20CEDE58009066E7 /* DJViewControllerProtocol.swift in Sources */,
 				E044EDB620CED77D009066E7 /* DJNavigationController.swift in Sources */,
-				E044EDC620CFB1BD009066E7 /* XMLParserManager.swift in Sources */,
 				E08A118820CD040E0018CC41 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
