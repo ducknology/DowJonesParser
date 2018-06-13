@@ -13,9 +13,28 @@ class DJMainTableViewController: UITableViewController {
 	private typealias NameLinkPair = (name: String, link: String)
 	private var nameLinkPairs: [NameLinkPair]? {
 		didSet {
-			self.tableView.reloadData()
+			guard self.isViewLoaded,
+				let validPairs = self.nameLinkPairs else
+			{
+				return
+			}
+			
+			self.djNavContorller?.showLoading()
+			
+			validPairs.forEach{nameValuePair in
+				self.loadFeeds(linkString: nameValuePair.link, completed: {[unowned self] repository in
+					self.categoryRepositoryMap[nameValuePair.name] = repository
+					
+					if self.categoryRepositoryMap.count == self.nameLinkPairs?.count ?? 0 {
+						self.djNavContorller?.hideLoading()
+						self.tableView.reloadData()
+					}
+				})
+			}
 		}
 	}
+	
+	private var categoryRepositoryMap = [String: FeedRepository]()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +93,27 @@ class DJMainTableViewController: UITableViewController {
 		dataTask.resume()
     }
 
+	private func loadFeeds(linkString: String, completed: @escaping (FeedRepository) -> Void) {
+		guard let validUrl = URL(string: linkString) else {
+			return
+		}
+		
+		let urlSession = URLSession(configuration: .default)
+		let dataTask = urlSession.dataTask(with: validUrl, completionHandler: {(data, _, error) in
+			guard error == nil,
+				let validData = data else
+			{
+				return
+			}
+			
+			DispatchQueue.main.async {
+				completed(FeedRepository(data: validData))
+			}
+		})
+		
+		dataTask.resume()
+	}
+	
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -90,8 +130,28 @@ class DJMainTableViewController: UITableViewController {
 		
 		let nameLinkPair = nameLinkPairs[indexPath.row]
 		cell.categoryName.text = nameLinkPair.name
-		cell.link = nameLinkPair.link
-
+		
+		cell.titleLabel.text	= ""
+		cell.feedDesc.text		= ""
+		cell.feedImage.image	= nil
+		
+		guard let repository = self.categoryRepositoryMap[nameLinkPair.name],
+			let feedItem = repository.feedItems.first else
+		{
+			return cell
+		}
+		
+		cell.repository			= repository
+		cell.titleLabel.text	= feedItem.title
+		cell.feedDesc.text		= feedItem.feedDesc
+		feedItem.requestImage(receiver: { (image, guid) in
+			guard cell.titleLabel.text == feedItem.title else {
+				return
+			}
+			
+			cell.feedImage.image = image
+		})
+		
         return cell
     }
 	
@@ -108,13 +168,13 @@ class DJMainTableViewController: UITableViewController {
 		case "showDetailContent":
 			guard let viewController = segue.destination as? DJContentTableViewController,
 				let cell = sender as? DJCategoryTableViewCell,
-				let link = cell.link else
+				let repository = cell.repository else
 			{
 				super.prepare(for: segue, sender: sender)
 				return
 			}
 			
-			viewController.url = URL(string: link)!
+			viewController.feedRepository = repository
 		default:
 			super.prepare(for: segue, sender: sender)
 		}

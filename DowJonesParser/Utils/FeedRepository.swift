@@ -14,7 +14,7 @@ class FeedRepository: NSObject {
 	
 	private var processingItem: DJRssItem? = nil
 	private var processingInnerText = ""
-	
+		
 	init(data: Data) {
 		self.xmlParser = XMLParser(data: data)
 		
