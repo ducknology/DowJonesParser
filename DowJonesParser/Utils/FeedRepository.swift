@@ -76,6 +76,10 @@ extension FeedRepository: XMLParserDelegate {
 			currentItem.link		= popedString
 		case "description":
 			currentItem.feedDesc	= popedString
+		case "guid":
+			currentItem.id			= popedString
+		case "pubdate":
+			currentItem.pubDate		= popedString
 		default:
 			break
 		}

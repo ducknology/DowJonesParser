@@ -11,7 +11,7 @@ import UIKit
 class DJContentTableViewCell: UITableViewCell {
 	
 	@IBOutlet weak var titleLabel: DJLabel!
-	@IBOutlet weak var descLabel: DJLabel!
+	@IBOutlet weak var publishDate: DJLabel!
 	@IBOutlet weak var feedImage: UIImageView!
 	
 	var targetLink: URL?

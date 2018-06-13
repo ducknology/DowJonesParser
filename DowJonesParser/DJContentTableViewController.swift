@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class DJContentTableViewController: UITableViewController {
 	
@@ -19,8 +20,7 @@ class DJContentTableViewController: UITableViewController {
 			self.loadFeeds()
 		}
 	}
-	
-	private var dataTask: URLSessionDataTask?
+
 	private var feedRepository: FeedRepository? {
 		didSet {
 			DispatchQueue.main.async {
@@ -28,6 +28,8 @@ class DJContentTableViewController: UITableViewController {
 			}
 		}
 	}
+	
+	private var dataTask: URLSessionDataTask?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,13 +52,16 @@ class DJContentTableViewController: UITableViewController {
 		
 		navController?.showLoading()
 		self.dataTask = urlSession.dataTask(with: validUrl, completionHandler: {[weak self] (data, _, error) in
+			defer {
+				navController?.hideLoading()
+			}
+			
 			guard let strongSelf = self else {
 				return
 			}
 			
 			defer {
 				strongSelf.dataTask = nil
-				navController?.hideLoading()
 			}
 			
 			guard error == nil,
@@ -82,10 +87,42 @@ class DJContentTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "shortContentCell", for: indexPath)
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "shortContentCell", for: indexPath) as? DJContentTableViewCell,
+			let item = self.feedRepository?.feedItems[indexPath.row] else
+		{
+			return tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+		}
+		
+		cell.titleLabel.text	= item.title
+		cell.publishDate.text	= item.pubDate
+		cell.feedImage.image	= nil
+		
+		item.requestImage { image, senderFeedId in
+			guard senderFeedId == item.id else {
+				return
+			}
+			
+			cell.feedImage.image = image
+		}
+		
+		cell.targetLink = item.imgUrl
 
         return cell
     }
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let item = self.feedRepository?.feedItems[indexPath.row] else {
+			return
+		}
+
+		let safariViewController = SFSafariViewController(url: item.linkUrl, configuration: { () -> SFSafariViewController.Configuration in
+			let configuration = SFSafariViewController.Configuration()
+			configuration.entersReaderIfAvailable = true
+			return configuration
+		}())
+		
+		self.navigationController?.pushViewController(safariViewController, animated: true)
+	}
 
     /*
     // Override to support conditional editing of the table view.

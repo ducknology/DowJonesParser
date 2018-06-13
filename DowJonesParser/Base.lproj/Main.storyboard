@@ -74,63 +74,61 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shortContentCell" rowHeight="95" id="ba9-XB-6DL" customClass="DJContentTableViewCell" customModule="DowJonesParser" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="95"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="shortContentCell" rowHeight="100" id="ba9-XB-6DL" customClass="DJContentTableViewCell" customModule="DowJonesParser" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ba9-XB-6DL" id="QFa-a7-uFi">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="94.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eu7-1B-CgP">
-                                            <rect key="frame" x="16" y="11" width="71.5" height="71.5"/>
+                                            <rect key="frame" x="16" y="15" width="80" height="53.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="LcX-wE-Vd0"/>
-                                                <constraint firstAttribute="width" secondItem="eu7-1B-CgP" secondAttribute="height" multiplier="1:1" id="cEk-Qw-xrU"/>
+                                                <constraint firstAttribute="width" constant="80" id="LcX-wE-Vd0"/>
+                                                <constraint firstAttribute="width" secondItem="eu7-1B-CgP" secondAttribute="height" multiplier="553:369" id="cEk-Qw-xrU"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Feed title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCs-by-lpc" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
-                                            <rect key="frame" x="97.5" y="11" width="235.5" height="29"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Feed title Feed title Feed title Feed title Feed title Feed title " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCs-by-lpc" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
+                                            <rect key="frame" x="109" y="11" width="250" height="48"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                                    <real key="value" value="24"/>
+                                                    <real key="value" value="20"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="bold" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="av2-sm-ytG" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
-                                            <rect key="frame" x="97.5" y="45" width="235.5" height="34"/>
-                                            <string key="text">Some very long text Some very long text Some very long text Some very long text Some very long text Some very long text Some very long text </string>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UvD-if-nnt" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
+                                            <rect key="frame" x="109" y="71" width="250" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                             <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="bold" value="NO"/>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
                                                     <real key="value" value="14"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="bold" value="NO"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="eu7-1B-CgP" firstAttribute="leading" secondItem="QFa-a7-uFi" secondAttribute="leadingMargin" id="59d-1m-tVb"/>
-                                        <constraint firstItem="av2-sm-ytG" firstAttribute="leading" secondItem="wCs-by-lpc" secondAttribute="leading" id="9qg-U6-bXN"/>
-                                        <constraint firstItem="wCs-by-lpc" firstAttribute="leading" secondItem="eu7-1B-CgP" secondAttribute="trailing" constant="10" id="IBE-AK-7hd"/>
-                                        <constraint firstItem="eu7-1B-CgP" firstAttribute="centerY" secondItem="QFa-a7-uFi" secondAttribute="centerY" id="PeQ-dG-bAD"/>
-                                        <constraint firstItem="av2-sm-ytG" firstAttribute="top" secondItem="wCs-by-lpc" secondAttribute="bottom" constant="5" id="Smk-nG-ePz"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="eu7-1B-CgP" secondAttribute="bottom" priority="998" id="Tzq-qC-REU"/>
-                                        <constraint firstItem="av2-sm-ytG" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="eu7-1B-CgP" secondAttribute="bottom" id="mAv-pL-zQw"/>
-                                        <constraint firstItem="eu7-1B-CgP" firstAttribute="top" secondItem="QFa-a7-uFi" secondAttribute="topMargin" priority="999" id="oez-FR-SDl"/>
-                                        <constraint firstItem="wCs-by-lpc" firstAttribute="top" secondItem="eu7-1B-CgP" secondAttribute="top" id="pEd-yV-TnR"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="av2-sm-ytG" secondAttribute="trailing" id="q28-Ir-9fu"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="UvD-if-nnt" secondAttribute="bottom" id="B9X-wN-3Df"/>
+                                        <constraint firstItem="wCs-by-lpc" firstAttribute="leading" secondItem="eu7-1B-CgP" secondAttribute="trailing" constant="13" id="IBE-AK-7hd"/>
+                                        <constraint firstItem="UvD-if-nnt" firstAttribute="leading" secondItem="wCs-by-lpc" secondAttribute="leading" id="KrE-fg-ei5"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="eu7-1B-CgP" secondAttribute="bottom" priority="999" id="Tzq-qC-REU"/>
+                                        <constraint firstItem="UvD-if-nnt" firstAttribute="top" secondItem="wCs-by-lpc" secondAttribute="bottom" constant="12" id="crq-Qg-I0C"/>
+                                        <constraint firstItem="UvD-if-nnt" firstAttribute="trailing" secondItem="QFa-a7-uFi" secondAttribute="trailingMargin" id="kmP-e3-RGS"/>
+                                        <constraint firstItem="eu7-1B-CgP" firstAttribute="top" secondItem="QFa-a7-uFi" secondAttribute="topMargin" constant="4" id="oez-FR-SDl"/>
+                                        <constraint firstItem="wCs-by-lpc" firstAttribute="top" secondItem="eu7-1B-CgP" secondAttribute="top" constant="-4" id="pEd-yV-TnR"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="wCs-by-lpc" secondAttribute="trailing" id="ugq-Xu-vX3"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="descLabel" destination="av2-sm-ytG" id="Atc-7n-om7"/>
                                     <outlet property="feedImage" destination="eu7-1B-CgP" id="7Bb-ix-xtH"/>
+                                    <outlet property="publishDate" destination="UvD-if-nnt" id="niS-rc-SO0"/>
                                     <outlet property="titleLabel" destination="wCs-by-lpc" id="rMi-Pt-niS"/>
                                 </connections>
                             </tableViewCell>
