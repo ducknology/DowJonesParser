@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class DJMainTableViewController: UITableViewController {
 
@@ -38,23 +39,40 @@ class DJMainTableViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.title = ""
 		
-		self.title = "WSJ RSS"
+		/*
+[NSLayoutConstraint constraintWithItem:contentView
+attribute:NSLayoutAttributeCenterX
+relatedBy:NSLayoutRelationEqual
+toItem:self.view
+attribute:NSLayoutAttributeCenterX
+multiplier:1.f constant:0.f]];*/
 		
+		let navTitleImageView = UIImageView(image: UIImage(named: "NavLogo"))
+		navTitleImageView.contentMode = .scaleAspectFit
+		navTitleImageView.frame = CGRect(x: 0, y: 4, width: 98, height: 24)
+		
+		let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 98, height: 32))
+		containerView.addSubview(navTitleImageView)
+		
+		self.navigationItem.titleView = containerView
+
+		self.extractLinksFromWeb()
+    }
+	
+	private func extractLinksFromWeb() {
 		self.djNavContorller?.showLoading()
 		
 		let urlString = "http://www.wsj.com/public/page/rss_news_and_feeds.html"
 		let url = URL(string: urlString)!
 		let urlSession = URLSession(configuration: .default)
 		let dataTask = urlSession.dataTask(with: url) {[weak self] (data, _, error) in
-			defer {
-				self?.djNavContorller?.hideLoading()
-			}
-			
 			guard error == nil,
 				let validData = data,
 				let allHtml = String(data: validData, encoding: .utf8) else
 			{
+				self?.djNavContorller?.hideLoading()
 				return
 			}
 			
@@ -62,10 +80,9 @@ class DJMainTableViewController: UITableViewController {
 			let pattern = "(?<=<div class=\"rssSectionList\">)((.|\n)*?)(?=</div>)"
 			let divResult = (try! NSRegularExpression(pattern: pattern))
 				.matches(in: allHtml, options: [], range: NSRange(allHtml.startIndex..., in: allHtml)).first!
-			
-			//	Grab the name and links within the DIV chunk
 			let rssSectionList = String(allHtml[Range(divResult.range, in: allHtml)!])
 			
+			//	Grab the name and links within the DIV chunk
 			//	Group 3 (.+?.xml): get content of href
 			//	Group 4 (.*?): get innertext of <a> tag
 			let namePattern = "(?<=<a)(.+?href=\"(.+?.xml)\".+?>)(.*?)(?=<\\/a>)"
@@ -73,7 +90,11 @@ class DJMainTableViewController: UITableViewController {
 				.matches(in: rssSectionList, options: [], range: NSRange(rssSectionList.startIndex..., in: rssSectionList))
 			
 			//	Map the data into more readable tuple
-			let allNames = nameResult.map{result in
+			let allNames = nameResult.compactMap{(result) -> NameLinkPair? in
+				guard result.numberOfRanges == 4 else {
+					return nil
+				}
+				
 				return NameLinkPair(name: String(rssSectionList[Range(result.range(at: 3), in: rssSectionList)!]),
 									link: { () -> String in
 										var link = String(rssSectionList[Range(result.range(at: 2), in: rssSectionList)!])
@@ -82,16 +103,17 @@ class DJMainTableViewController: UITableViewController {
 											link = "https://www.wsj.com\(link)"
 										}
 										return link
-									}())
+				}())
 			}
 			
 			DispatchQueue.main.async {
 				self?.nameLinkPairs = allNames
+				self?.djNavContorller?.hideLoading()
 			}
 		}
 		
 		dataTask.resume()
-    }
+	}
 
 	private func loadFeeds(linkString: String, completed: @escaping (FeedRepository) -> Void) {
 		guard let validUrl = URL(string: linkString) else {
@@ -129,11 +151,19 @@ class DJMainTableViewController: UITableViewController {
 		}
 		
 		let nameLinkPair = nameLinkPairs[indexPath.row]
-		cell.categoryName.text = nameLinkPair.name
 		
+		cell.delegate			= self
+		cell.categoryName.text	= nameLinkPair.name
 		cell.titleLabel.text	= ""
 		cell.feedDesc.text		= ""
 		cell.feedImage.image	= nil
+		
+		switch indexPath.row {
+		case 0:
+			cell.topConstraint.constant = 0
+		default:
+			cell.topConstraint.constant = 8
+		}
 		
 		guard let repository = self.categoryRepositoryMap[nameLinkPair.name],
 			let feedItem = repository.feedItems.first else
@@ -179,15 +209,18 @@ class DJMainTableViewController: UITableViewController {
 			super.prepare(for: segue, sender: sender)
 		}
 	}
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+extension DJMainTableViewController: DJCategoryCellDelegate {
+	func cellDidTap(cell: DJCategoryTableViewCell) {
+		guard let item = cell.relatedItem else {
+			return
+		}
+		
+		let configuration = SFSafariViewController.Configuration()
+		let safariViewController = SFSafariViewController(url: item.linkUrl, configuration: configuration)
+		safariViewController.preferredControlTintColor	= UIColor.black
+		self.present(safariViewController, animated: true, completion: nil)
+	}
+}
+

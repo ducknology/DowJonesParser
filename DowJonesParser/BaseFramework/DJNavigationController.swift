@@ -30,6 +30,8 @@ class DJNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.navigationBar.tintColor = UIColor.black
     }
 	
 	func showLoading() {

@@ -21,25 +21,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="categoryCell" rowHeight="300" id="1Hy-w2-83h" customClass="DJCategoryTableViewCell" customModule="DowJonesParser" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="300"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="categoryCell" rowHeight="309" id="1Hy-w2-83h" customClass="DJCategoryTableViewCell" customModule="DowJonesParser" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="309"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Hy-w2-83h" id="59m-WP-OQl">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="308.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uzf-8R-qmC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                            <rect key="frame" x="0.5" y="8" width="374.5" height="250"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TestPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="ZgT-je-Izz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TestPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="ZgT-je-Izz">
+                                                    <rect key="frame" x="-0.5" y="0.0" width="375" height="250"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wTy-f4-Orz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                                    <rect key="frame" x="-0.5" y="0.0" width="375" height="250"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="But the real question media moguls will ask themselves: Is Donald Trump listening?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7Y-W8-Z38" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
-                                                    <rect key="frame" x="25" y="201.5" width="325" height="33.5"/>
+                                                    <rect key="frame" x="25" y="201.5" width="324.5" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On Big Media, the Court Speak" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFg-eB-BB6" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
-                                                    <rect key="frame" x="25" y="157.5" width="325" height="29"/>
+                                                    <rect key="frame" x="25" y="157.5" width="324.5" height="29"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -75,7 +75,7 @@
                                                 <constraint firstItem="ZgT-je-Izz" firstAttribute="top" secondItem="Uzf-8R-qmC" secondAttribute="top" id="Xmg-yA-Oof"/>
                                                 <constraint firstAttribute="bottom" secondItem="wTy-f4-Orz" secondAttribute="bottom" id="iss-TR-irF"/>
                                                 <constraint firstAttribute="width" secondItem="Uzf-8R-qmC" secondAttribute="height" multiplier="553:369" id="mWP-Bc-jSt"/>
-                                                <constraint firstAttribute="height" constant="250" id="p8I-ex-vvd"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="p8I-ex-vvd"/>
                                                 <constraint firstItem="wTy-f4-Orz" firstAttribute="leading" secondItem="Uzf-8R-qmC" secondAttribute="leading" id="pVj-MK-Q1U"/>
                                                 <constraint firstItem="wTy-f4-Orz" firstAttribute="top" secondItem="Uzf-8R-qmC" secondAttribute="top" id="qVs-px-Jue"/>
                                                 <constraint firstAttribute="trailing" secondItem="z7Y-W8-Z38" secondAttribute="trailing" constant="25" id="qZH-oR-fxE"/>
@@ -84,10 +84,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPu-6i-UvI">
-                                            <rect key="frame" x="0.0" y="250" width="375" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="258" width="375" height="50.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opinion" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3n0-ob-RlT" customClass="DJLabel" customModule="DowJonesParser" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="17.5" width="329" height="24"/>
+                                                    <rect key="frame" x="8" y="8" width="338" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -99,10 +99,10 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Kdb-L1-fVO">
-                                                    <rect key="frame" x="342" y="18" width="25" height="25"/>
+                                                    <rect key="frame" x="351" y="12.5" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Kdb-L1-fVO" secondAttribute="height" multiplier="1:1" id="AhB-gs-LT8"/>
-                                                        <constraint firstAttribute="width" constant="25" id="ev7-dT-qAa"/>
+                                                        <constraint firstAttribute="width" constant="16" id="ev7-dT-qAa"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -111,9 +111,9 @@
                                                 <constraint firstItem="3n0-ob-RlT" firstAttribute="leading" secondItem="HPu-6i-UvI" secondAttribute="leadingMargin" id="03g-pB-6IL"/>
                                                 <constraint firstItem="Kdb-L1-fVO" firstAttribute="centerY" secondItem="3n0-ob-RlT" secondAttribute="centerY" id="4xF-KS-oNm"/>
                                                 <constraint firstItem="Kdb-L1-fVO" firstAttribute="leading" secondItem="3n0-ob-RlT" secondAttribute="trailing" constant="5" id="AIT-y1-gsx"/>
+                                                <constraint firstItem="3n0-ob-RlT" firstAttribute="top" secondItem="HPu-6i-UvI" secondAttribute="topMargin" id="B1s-Wp-76h"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Kdb-L1-fVO" secondAttribute="trailing" id="CuO-pT-R5J"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="3n0-ob-RlT" secondAttribute="bottom" id="I3f-zI-UwA"/>
-                                                <constraint firstAttribute="height" constant="50" id="So5-0z-ESb"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="50" id="So5-0z-ESb"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -123,7 +123,9 @@
                                         <constraint firstAttribute="trailing" secondItem="HPu-6i-UvI" secondAttribute="trailing" id="M6s-64-ZpE"/>
                                         <constraint firstItem="HPu-6i-UvI" firstAttribute="leading" secondItem="59m-WP-OQl" secondAttribute="leading" id="RZo-70-W5X"/>
                                         <constraint firstItem="HPu-6i-UvI" firstAttribute="top" secondItem="Uzf-8R-qmC" secondAttribute="bottom" id="ZAN-iT-fZN"/>
-                                        <constraint firstItem="Uzf-8R-qmC" firstAttribute="top" secondItem="59m-WP-OQl" secondAttribute="top" id="auK-iB-94e"/>
+                                        <constraint firstItem="Uzf-8R-qmC" firstAttribute="top" secondItem="59m-WP-OQl" secondAttribute="top" constant="8" id="auK-iB-94e"/>
+                                        <constraint firstItem="Uzf-8R-qmC" firstAttribute="leading" relation="lessThanOrEqual" secondItem="59m-WP-OQl" secondAttribute="leading" id="eol-ih-Oj0"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uzf-8R-qmC" secondAttribute="trailing" id="xuH-he-5g0"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
@@ -131,7 +133,9 @@
                                     <outlet property="categoryName" destination="3n0-ob-RlT" id="zxr-gy-jE2"/>
                                     <outlet property="feedDesc" destination="z7Y-W8-Z38" id="27Z-Rl-dtO"/>
                                     <outlet property="feedImage" destination="ZgT-je-Izz" id="YLj-2g-6iC"/>
+                                    <outlet property="highlightView" destination="Uzf-8R-qmC" id="axj-OS-NMi"/>
                                     <outlet property="titleLabel" destination="QFg-eB-BB6" id="g8Z-8P-S17"/>
+                                    <outlet property="topConstraint" destination="auK-iB-94e" id="Gbn-Ki-O53"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -222,6 +226,9 @@
                             <outlet property="delegate" destination="EMD-nN-tj0" id="sKF-qs-Buk"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="WTU-eO-egx">
+                        <barButtonItem key="backBarButtonItem" title="asd" id="7lM-aJ-gDw"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q10-72-D0X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -23,9 +23,8 @@ class DJContentTableViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
 		self.tableView.reloadData()
-    }
+     }
 	
     // MARK: - Table view data source
 
@@ -65,14 +64,10 @@ class DJContentTableViewController: UITableViewController {
 		guard let item = self.feedRepository?.feedItems[indexPath.row] else {
 			return
 		}
-
-		let safariViewController = SFSafariViewController(url: item.linkUrl, configuration: { () -> SFSafariViewController.Configuration in
-			let configuration = SFSafariViewController.Configuration()
-			configuration.entersReaderIfAvailable = true
-			return configuration
-		}())
 		
-		self.navigationController?.pushViewController(safariViewController, animated: true)
+		let safariViewController = SFSafariViewController(url: item.linkUrl, configuration: SFSafariViewController.Configuration())
+		safariViewController.preferredControlTintColor	= UIColor.black
+		self.present(safariViewController, animated: true, completion: nil)
 	}
 }
 

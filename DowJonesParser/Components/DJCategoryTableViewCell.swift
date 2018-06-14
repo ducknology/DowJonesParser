@@ -17,6 +17,8 @@ class DJCategoryTableViewCell: UITableViewCell {
 	@IBOutlet weak var feedDesc: DJLabel!
 	@IBOutlet weak var feedImage: UIImageView!
 	@IBOutlet weak var categoryName: DJLabel!
+	@IBOutlet weak var highlightView: UIView!
+	@IBOutlet weak var topConstraint: NSLayoutConstraint!
 	
 	private var tapGesture: UITapGestureRecognizer?
 	
@@ -50,7 +52,8 @@ class DJCategoryTableViewCell: UITableViewCell {
 		super.awakeFromNib()
 		
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapFeed(tapGesture:)))
-		self.feedImage.addGestureRecognizer(tapGesture)
+		self.highlightView.addGestureRecognizer(tapGesture)
+		self.highlightView.isUserInteractionEnabled = true
 		self.tapGesture = tapGesture
 	}
 	
