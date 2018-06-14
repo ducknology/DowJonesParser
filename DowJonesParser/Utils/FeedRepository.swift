@@ -14,10 +14,12 @@ class FeedRepository: NSObject {
 	
 	private var processingItem: DJRssItem? = nil
 	private var processingInnerText = ""
+	
+	let categoryName: String
 		
-	init(data: Data) {
+	init(categoryName: String, data: Data) {
 		self.xmlParser = XMLParser(data: data)
-		
+		self.categoryName = categoryName
 		super.init()
 		
 		self.xmlParser.delegate = self

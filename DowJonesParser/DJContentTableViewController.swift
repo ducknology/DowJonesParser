@@ -9,6 +9,10 @@
 import UIKit
 import SafariServices
 
+protocol DJContentTableViewControllerRefreshDelegate: class {
+	func requestRefresh(categoryName: String, completed: @escaping (_: FeedRepository?) -> Void)
+}
+
 class DJContentTableViewController: UITableViewController {
 	
 	var feedRepository: FeedRepository? {
@@ -21,10 +25,44 @@ class DJContentTableViewController: UITableViewController {
 		}
 	}
 	
+	weak var delegate: DJContentTableViewControllerRefreshDelegate?
+	var categoryName: String! {
+		didSet {
+			guard let label = self.navigationItem.titleView as? DJLabel else {
+				return
+			}
+			
+			label.text = self.categoryName
+		}
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		let refreshControl = UIRefreshControl(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+		refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+		self.refreshControl = refreshControl
+		
+		let titleLabel = DJLabel()
+		titleLabel.fontSize = 18
+		titleLabel.awakeFromNib()
+		titleLabel.text = self.categoryName
+		
+		self.navigationItem.titleView = titleLabel
+
 		self.tableView.reloadData()
      }
+	
+	@objc func refresh(_ sender: Any) {
+		guard let delegate = self.delegate else {
+			return
+		}
+		
+		delegate.requestRefresh(categoryName: self.title ?? "", completed: {[weak self] updatedRepository in
+			self?.feedRepository = updatedRepository
+			self?.refreshControl?.endRefreshing()
+		})
+	}
 	
     // MARK: - Table view data source
 
@@ -53,6 +91,12 @@ class DJContentTableViewController: UITableViewController {
 			}
 			
 			cell.feedImage.image = image
+			if cell.feedImage.image == nil {
+				cell.imageWidthConstraint.constant = 0
+			}
+			else {
+				cell.imageWidthConstraint.constant = 80
+			}
 		}
 		
 		cell.targetLink = item.imgUrl

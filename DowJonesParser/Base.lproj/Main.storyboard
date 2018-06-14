@@ -12,7 +12,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Main Table View Controller-->
         <scene sceneID="cWa-iy-llR">
             <objects>
                 <tableViewController id="BBN-UG-BEe" customClass="DJMainTableViewController" customModule="DowJonesParser" customModuleProvider="target" sceneMemberID="viewController">
@@ -144,7 +144,7 @@
                             <outlet property="delegate" destination="BBN-UG-BEe" id="dts-B8-eMm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="yPp-op-tB3"/>
+                    <navigationItem key="navigationItem" id="yPp-op-tB3"/>
                     <connections>
                         <segue destination="EMD-nN-tj0" kind="show" identifier="showDetailContent" id="YUa-hX-HbA"/>
                     </connections>
@@ -216,6 +216,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="feedImage" destination="eu7-1B-CgP" id="7Bb-ix-xtH"/>
+                                    <outlet property="imageWidthConstraint" destination="LcX-wE-Vd0" id="nDg-Gs-rcA"/>
                                     <outlet property="publishDate" destination="UvD-if-nnt" id="niS-rc-SO0"/>
                                     <outlet property="titleLabel" destination="wCs-by-lpc" id="rMi-Pt-niS"/>
                                 </connections>
@@ -226,9 +227,6 @@
                             <outlet property="delegate" destination="EMD-nN-tj0" id="sKF-qs-Buk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="WTU-eO-egx">
-                        <barButtonItem key="backBarButtonItem" title="asd" id="7lM-aJ-gDw"/>
-                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q10-72-D0X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

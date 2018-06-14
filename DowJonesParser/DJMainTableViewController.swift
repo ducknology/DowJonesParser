@@ -23,8 +23,14 @@ class DJMainTableViewController: UITableViewController {
 			self.djNavContorller?.showLoading()
 			
 			validPairs.forEach{nameValuePair in
-				self.loadFeeds(linkString: nameValuePair.link, completed: {[unowned self] repository in
-					self.categoryRepositoryMap[nameValuePair.name] = repository
+				self.loadFeeds(categoryName: nameValuePair.name, linkString: nameValuePair.link, completed: {[unowned self] repository in
+					guard let validRepository = repository else {
+						//	If repository is invalid, remove this entry
+						self.nameLinkPairs = self.nameLinkPairs?.filter({$0.name != nameValuePair.name})
+						return
+					}
+					
+					self.categoryRepositoryMap[nameValuePair.name] = validRepository
 					
 					if self.categoryRepositoryMap.count == self.nameLinkPairs?.count ?? 0 {
 						self.djNavContorller?.hideLoading()
@@ -36,18 +42,10 @@ class DJMainTableViewController: UITableViewController {
 	}
 	
 	private var categoryRepositoryMap = [String: FeedRepository]()
-	
-    override func viewDidLoad() {
+
+	override func viewDidLoad() {
         super.viewDidLoad()
 		self.title = ""
-		
-		/*
-[NSLayoutConstraint constraintWithItem:contentView
-attribute:NSLayoutAttributeCenterX
-relatedBy:NSLayoutRelationEqual
-toItem:self.view
-attribute:NSLayoutAttributeCenterX
-multiplier:1.f constant:0.f]];*/
 		
 		let navTitleImageView = UIImageView(image: UIImage(named: "NavLogo"))
 		navTitleImageView.contentMode = .scaleAspectFit
@@ -57,22 +55,32 @@ multiplier:1.f constant:0.f]];*/
 		containerView.addSubview(navTitleImageView)
 		
 		self.navigationItem.titleView = containerView
-
+		
+		let refreshControl = UIRefreshControl(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+		refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+		self.refreshControl = refreshControl
+		
 		self.extractLinksFromWeb()
     }
 	
+	@objc func refresh(_ sender: Any) {
+		self.extractLinksFromWeb()
+		self.refreshControl?.endRefreshing()
+	}
+	
 	private func extractLinksFromWeb() {
+		self.nameLinkPairs?.removeAll()
 		self.djNavContorller?.showLoading()
 		
 		let urlString = "http://www.wsj.com/public/page/rss_news_and_feeds.html"
 		let url = URL(string: urlString)!
 		let urlSession = URLSession(configuration: .default)
-		let dataTask = urlSession.dataTask(with: url) {[weak self] (data, _, error) in
+		let dataTask = urlSession.dataTask(with: url) {[unowned self] (data, _, error) in
 			guard error == nil,
 				let validData = data,
 				let allHtml = String(data: validData, encoding: .utf8) else
 			{
-				self?.djNavContorller?.hideLoading()
+				self.djNavContorller?.hideLoading()
 				return
 			}
 			
@@ -107,30 +115,40 @@ multiplier:1.f constant:0.f]];*/
 			}
 			
 			DispatchQueue.main.async {
-				self?.nameLinkPairs = allNames
-				self?.djNavContorller?.hideLoading()
+				self.nameLinkPairs = allNames
+				self.djNavContorller?.hideLoading()
 			}
 		}
 		
 		dataTask.resume()
 	}
 
-	private func loadFeeds(linkString: String, completed: @escaping (FeedRepository) -> Void) {
+	private func loadFeeds(categoryName: String, linkString: String, completed: @escaping (FeedRepository?) -> Void) {
+		let resultRepository: FeedRepository?
 		guard let validUrl = URL(string: linkString) else {
+			DispatchQueue.main.async {
+				completed(nil)
+			}
 			return
 		}
 		
 		let urlSession = URLSession(configuration: .default)
 		let dataTask = urlSession.dataTask(with: validUrl, completionHandler: {(data, _, error) in
+			let resultRepository: FeedRepository?
+			defer {
+				DispatchQueue.main.async {
+					completed(resultRepository)
+				}
+			}
+			
 			guard error == nil,
 				let validData = data else
 			{
+				resultRepository = nil
 				return
 			}
 			
-			DispatchQueue.main.async {
-				completed(FeedRepository(data: validData))
-			}
+			resultRepository = FeedRepository(categoryName: categoryName, data: validData)
 		})
 		
 		dataTask.resume()
@@ -205,6 +223,8 @@ multiplier:1.f constant:0.f]];*/
 			}
 			
 			viewController.feedRepository = repository
+			viewController.delegate = self
+			viewController.categoryName = repository.categoryName
 		default:
 			super.prepare(for: segue, sender: sender)
 		}
@@ -224,3 +244,21 @@ extension DJMainTableViewController: DJCategoryCellDelegate {
 	}
 }
 
+extension DJMainTableViewController: DJContentTableViewControllerRefreshDelegate {
+	func requestRefresh(categoryName: String, completed: @escaping (FeedRepository?) -> Void) {
+		guard let validLink = self.nameLinkPairs?.filter({$0.name == categoryName}).first?.link else {
+			completed(nil)
+			return
+		}
+		
+		self.loadFeeds(categoryName: categoryName, linkString: validLink) {[unowned self] repository in
+			guard let validRepository = repository else {
+				completed(nil)
+				return
+			}
+			
+			self.categoryRepositoryMap[categoryName] = validRepository
+			completed(validRepository)
+		}
+	}
+}
