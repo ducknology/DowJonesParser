@@ -9,6 +9,7 @@
 import UIKit
 
 class DJContentTableViewCell: UITableViewCell {
+	static let cellName = "shortContentCell"
 	
 	@IBOutlet weak var titleLabel: DJLabel!
 	@IBOutlet weak var publishDate: DJLabel!

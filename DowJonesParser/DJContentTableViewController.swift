@@ -83,7 +83,7 @@ class DJContentTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "shortContentCell", for: indexPath) as? DJContentTableViewCell,
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: DJContentTableViewCell.cellName, for: indexPath) as? DJContentTableViewCell,
 			let item = self.feedRepository?.feedItems[indexPath.row] else
 		{
 			return tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

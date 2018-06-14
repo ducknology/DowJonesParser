@@ -13,6 +13,8 @@ protocol DJCategoryCellDelegate: class {
 }
 
 class DJCategoryTableViewCell: UITableViewCell {
+	static let cellName = "categoryCell"
+	
 	@IBOutlet weak var titleLabel: DJLabel!
 	@IBOutlet weak var feedDesc: DJLabel!
 	@IBOutlet weak var feedImage: UIImageView!

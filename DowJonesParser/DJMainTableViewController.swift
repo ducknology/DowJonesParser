@@ -10,32 +10,40 @@ import UIKit
 import SafariServices
 
 class DJMainTableViewController: UITableViewController {
+	
+	enum SegueNames: String {
+		case showDetailContent = "showDetailContent"
+	}
 
-	private typealias NameLinkPair = (name: String, link: String)
-	private var nameLinkPairs: [NameLinkPair]? {
+	private typealias CategoryInfo = (name: String, link: String)
+	private var categories: [CategoryInfo]? {
 		didSet {
 			guard self.isViewLoaded,
-				let validPairs = self.nameLinkPairs else
+				let validPairs = self.categories else
 			{
 				return
 			}
 			
 			self.djNavContorller?.showLoading()
 			
-			validPairs.forEach{nameValuePair in
-				self.loadFeeds(categoryName: nameValuePair.name, linkString: nameValuePair.link, completed: {[unowned self] repository in
+			let dispatchGroup = DispatchGroup()
+			
+			dispatchGroup.notify(queue: .main) {
+				self.djNavContorller?.hideLoading()
+				self.tableView.reloadData()
+			}
+			
+			validPairs.forEach{category in
+				dispatchGroup.enter()
+				self.loadFeeds(categoryName: category.name, linkString: category.link, completed: {[unowned self] repository in
 					guard let validRepository = repository else {
 						//	If repository is invalid, remove this entry
-						self.nameLinkPairs = self.nameLinkPairs?.filter({$0.name != nameValuePair.name})
+						self.removeCategory(name: category.name)
 						return
 					}
 					
-					self.categoryRepositoryMap[nameValuePair.name] = validRepository
-					
-					if self.categoryRepositoryMap.count == self.nameLinkPairs?.count ?? 0 {
-						self.djNavContorller?.hideLoading()
-						self.tableView.reloadData()
-					}
+					self.categoryRepositoryMap[category.name] = validRepository
+					dispatchGroup.leave()
 				})
 			}
 		}
@@ -72,8 +80,18 @@ class DJMainTableViewController: UITableViewController {
 		self.refreshControl?.endRefreshing()
 	}
 	
+	private func removeCategory(name: String) {
+		self.categories = self.categories?.filter({$0.name != name})
+		self.categoryRepositoryMap[name] = nil
+	}
+	
+	private func removeAllCategory() {
+		self.categories?.removeAll()
+		self.categoryRepositoryMap.removeAll()
+	}
+	
 	private func extractLinksFromWeb() {
-		self.nameLinkPairs?.removeAll()
+		self.removeAllCategory()
 		self.djNavContorller?.showLoading()
 		
 		let urlString = "http://www.wsj.com/public/page/rss_news_and_feeds.html"
@@ -102,12 +120,12 @@ class DJMainTableViewController: UITableViewController {
 				.matches(in: rssSectionList, options: [], range: NSRange(rssSectionList.startIndex..., in: rssSectionList))
 			
 			//	Map the data into more readable tuple
-			let allNames = nameResult.compactMap{(result) -> NameLinkPair? in
+			let allNames = nameResult.compactMap{(result) -> CategoryInfo? in
 				guard result.numberOfRanges == 4 else {
 					return nil
 				}
 				
-				return NameLinkPair(name: String(rssSectionList[Range(result.range(at: 3), in: rssSectionList)!]),
+				return CategoryInfo(name: String(rssSectionList[Range(result.range(at: 3), in: rssSectionList)!]),
 									link: { () -> String in
 										var link = String(rssSectionList[Range(result.range(at: 2), in: rssSectionList)!])
 										let urlComponents = URLComponents(string: link)
@@ -119,7 +137,7 @@ class DJMainTableViewController: UITableViewController {
 			}
 			
 			DispatchQueue.main.async {
-				self.nameLinkPairs = allNames
+				self.categories = allNames
 				self.djNavContorller?.hideLoading()
 			}
 		}
@@ -163,19 +181,19 @@ class DJMainTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.nameLinkPairs?.count ?? 0
+        return self.categories?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? DJCategoryTableViewCell,
-			let nameLinkPairs = self.nameLinkPairs else {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: DJCategoryTableViewCell.cellName, for: indexPath) as? DJCategoryTableViewCell,
+			let categories = self.categories else {
 			return tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 		}
 		
-		let nameLinkPair = nameLinkPairs[indexPath.row]
+		let category = categories[indexPath.row]
 		
 		cell.delegate			= self
-		cell.categoryName.text	= nameLinkPair.name
+		cell.categoryName.text	= category.name
 		cell.titleLabel.text	= ""
 		cell.feedDesc.text		= ""
 		cell.feedImage.image	= nil
@@ -187,7 +205,7 @@ class DJMainTableViewController: UITableViewController {
 			cell.topConstraint.constant = 8
 		}
 		
-		guard let repository = self.categoryRepositoryMap[nameLinkPair.name],
+		guard let repository = self.categoryRepositoryMap[category.name],
 			let feedItem = repository.feedItems.first else
 		{
 			return cell
@@ -212,16 +230,16 @@ class DJMainTableViewController: UITableViewController {
 			return
 		}
 		
-		guard self.shouldPerformSegue(withIdentifier: "showDetailContent", sender: cell) else {
+		guard self.shouldPerformSegue(withIdentifier: SegueNames.showDetailContent.rawValue, sender: cell) else {
 			return
 		}
 		
-		self.performSegue(withIdentifier: "showDetailContent", sender: cell)
+		self.performSegue(withIdentifier: SegueNames.showDetailContent.rawValue, sender: cell)
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case "showDetailContent":
+		switch SegueNames(rawValue: segue.identifier ?? "") {
+		case .some(.showDetailContent):
 			guard let viewController = segue.destination as? DJContentTableViewController,
 				let cell = sender as? DJCategoryTableViewCell,
 				let repository = cell.repository else
@@ -239,8 +257,8 @@ class DJMainTableViewController: UITableViewController {
 	}
 	
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-		switch identifier {
-		case "showDetailContent":
+		switch SegueNames(rawValue: identifier) {
+		case .some(.showDetailContent):
 			guard let cell = sender as? DJCategoryTableViewCell,
 				let repository = cell.repository,
 				repository.feedItems.count > 0 else
@@ -277,7 +295,7 @@ extension DJMainTableViewController: DJCategoryCellDelegate {
 
 extension DJMainTableViewController: DJContentTableViewControllerRefreshDelegate {
 	func requestRefresh(categoryName: String, completed: @escaping (FeedRepository?) -> Void) {
-		guard let validLink = self.nameLinkPairs?.filter({$0.name == categoryName}).first?.link else {
+		guard let validLink = self.categories?.filter({$0.name == categoryName}).first?.link else {
 			completed(nil)
 			return
 		}
