@@ -95,9 +95,8 @@ class DJMainTableViewController: UITableViewController {
 		self.djNavContorller?.showLoading()
 		
 		let urlString = "http://www.wsj.com/public/page/rss_news_and_feeds.html"
-		let url = URL(string: urlString)!
-		let urlSession = URLSession(configuration: .default)
-		let dataTask = urlSession.dataTask(with: url) {[unowned self] (data, _, error) in
+		var request = NetworkRequest(linkString: urlString)
+		request.run { (data, error) in
 			guard error == nil,
 				let validData = data,
 				let allHtml = String(data: validData, encoding: .utf8) else
@@ -141,8 +140,6 @@ class DJMainTableViewController: UITableViewController {
 				self.djNavContorller?.hideLoading()
 			}
 		}
-		
-		dataTask.resume()
 	}
 
 	private func loadFeeds(categoryName: String, linkString: String, completed: @escaping (FeedRepository?) -> Void) {
@@ -154,13 +151,11 @@ class DJMainTableViewController: UITableViewController {
 			return
 		}
 		
-		let urlSession = URLSession(configuration: .default)
-		let dataTask = urlSession.dataTask(with: validUrl, completionHandler: {(data, _, error) in
+		var request = NetworkRequest(url: validUrl)
+		request.run { (data, error) in
 			let resultRepository: FeedRepository?
 			defer {
-				DispatchQueue.main.async {
-					completed(resultRepository)
-				}
+				completed(resultRepository)
 			}
 			
 			guard error == nil,
@@ -171,9 +166,7 @@ class DJMainTableViewController: UITableViewController {
 			}
 			
 			resultRepository = FeedRepository(categoryName: categoryName, link: linkString, data: validData)
-		})
-		
-		dataTask.resume()
+		}
 	}
 	
     override func numberOfSections(in tableView: UITableView) -> Int {

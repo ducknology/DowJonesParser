@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E0114A1320D0512E00E30D3F /* DJContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0114A1220D0512E00E30D3F /* DJContentTableViewCell.swift */; };
+		E02EF4DF20D24DDB00B5F597 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02EF4DE20D24DDB00B5F597 /* NetworkRequest.swift */; };
 		E044EDB420CED721009066E7 /* DJMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDB320CED721009066E7 /* DJMainTableViewController.swift */; };
 		E044EDB620CED77D009066E7 /* DJNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDB520CED77D009066E7 /* DJNavigationController.swift */; };
 		E044EDB820CED834009066E7 /* DJLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044EDB720CED834009066E7 /* DJLoadingViewController.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		E0114A1220D0512E00E30D3F /* DJContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJContentTableViewCell.swift; sourceTree = "<group>"; };
+		E02EF4DE20D24DDB00B5F597 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		E044EDB320CED721009066E7 /* DJMainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJMainTableViewController.swift; sourceTree = "<group>"; };
 		E044EDB520CED77D009066E7 /* DJNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJNavigationController.swift; sourceTree = "<group>"; };
 		E044EDB720CED834009066E7 /* DJLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJLoadingViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E02EF4DD20D24DB900B5F597 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E02EF4DE20D24DDB00B5F597 /* NetworkRequest.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		E044EDBD20CF6319009066E7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +104,7 @@
 		E08A118620CD040E0018CC41 /* DowJonesParser */ = {
 			isa = PBXGroup;
 			children = (
+				E02EF4DD20D24DB900B5F597 /* Network */,
 				E0CDD76720CFE30900E2090B /* Models */,
 				E044EDC020CF759D009066E7 /* BaseFramework */,
 				E044EDBD20CF6319009066E7 /* Components */,
@@ -197,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E02EF4DF20D24DDB00B5F597 /* NetworkRequest.swift in Sources */,
 				E044EDBA20CEDCCB009066E7 /* StoryboardCreatable.swift in Sources */,
 				E044EDC220CF7629009066E7 /* DJContentTableViewController.swift in Sources */,
 				E04B5E5020D03B2A00B9E935 /* DJLabel.swift in Sources */,
