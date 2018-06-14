@@ -58,9 +58,17 @@ class DJContentTableViewController: UITableViewController {
 			return
 		}
 		
-		delegate.requestRefresh(categoryName: self.title ?? "", completed: {[weak self] updatedRepository in
-			self?.feedRepository = updatedRepository
-			self?.refreshControl?.endRefreshing()
+		delegate.requestRefresh(categoryName: self.categoryName, completed: {[weak self] updatedRepository in
+			defer {
+				self?.refreshControl?.endRefreshing()
+			}
+			
+			guard let validRepository = updatedRepository else {
+				return
+			}
+			
+			self?.feedRepository = validRepository
+			
 		})
 	}
 	

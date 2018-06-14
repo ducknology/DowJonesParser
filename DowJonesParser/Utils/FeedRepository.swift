@@ -16,10 +16,13 @@ class FeedRepository: NSObject {
 	private var processingInnerText = ""
 	
 	let categoryName: String
+	let link: String
 		
-	init(categoryName: String, data: Data) {
+	init(categoryName: String, link: String, data: Data) {
 		self.xmlParser = XMLParser(data: data)
 		self.categoryName = categoryName
+		self.link = link
+		
 		super.init()
 		
 		self.xmlParser.delegate = self

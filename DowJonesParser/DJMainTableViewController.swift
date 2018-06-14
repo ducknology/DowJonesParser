@@ -41,7 +41,11 @@ class DJMainTableViewController: UITableViewController {
 		}
 	}
 	
-	private var categoryRepositoryMap = [String: FeedRepository]()
+	private var categoryRepositoryMap = [String: FeedRepository]() {
+		didSet {
+			self.tableView.reloadData()
+		}
+	}
 
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +152,7 @@ class DJMainTableViewController: UITableViewController {
 				return
 			}
 			
-			resultRepository = FeedRepository(categoryName: categoryName, data: validData)
+			resultRepository = FeedRepository(categoryName: categoryName, link: linkString, data: validData)
 		})
 		
 		dataTask.resume()
@@ -208,6 +212,10 @@ class DJMainTableViewController: UITableViewController {
 			return
 		}
 		
+		guard self.shouldPerformSegue(withIdentifier: "showDetailContent", sender: cell) else {
+			return
+		}
+		
 		self.performSegue(withIdentifier: "showDetailContent", sender: cell)
 	}
 	
@@ -227,6 +235,29 @@ class DJMainTableViewController: UITableViewController {
 			viewController.categoryName = repository.categoryName
 		default:
 			super.prepare(for: segue, sender: sender)
+		}
+	}
+	
+	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+		switch identifier {
+		case "showDetailContent":
+			guard let cell = sender as? DJCategoryTableViewCell,
+				let repository = cell.repository,
+				repository.feedItems.count > 0 else
+			{
+				let alertController = UIAlertController(title: "", message: "There is no feed in this category now. Please check back later.", preferredStyle: .alert)
+				let action = UIAlertAction(title: "OK", style: .default) { _ in
+					alertController.dismiss(animated: true, completion: nil)
+				}
+				alertController.addAction(action)
+				
+				self.present(alertController, animated: true, completion: nil)
+				return false
+			}
+			
+			return true
+		default:
+			return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
 		}
 	}
 }
