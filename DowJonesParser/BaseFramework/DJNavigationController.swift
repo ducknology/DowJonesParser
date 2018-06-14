@@ -35,16 +35,13 @@ class DJNavigationController: UINavigationController {
     }
 	
 	func showLoading() {
-		DispatchQueue.main.async { [weak self] in
-			self?.loading += 1
-		}
+		self.loading += 1
 	}
 	
 	func hideLoading() {
-		DispatchQueue.main.async { [weak self] in
-			if self?.loading ?? 0 > 0 {
-				self?.loading -= 1
-			}
+		if self.loading > 0 {
+			self.loading -= 1
 		}
 	}
+
 }

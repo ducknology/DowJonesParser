@@ -102,6 +102,8 @@ class DJMainTableViewController: UITableViewController {
 				let allHtml = String(data: validData, encoding: .utf8) else
 			{
 				self.djNavContorller?.hideLoading()
+				self.showSimpleAlert("Failed to load categories")
+
 				return
 			}
 			
@@ -121,6 +123,7 @@ class DJMainTableViewController: UITableViewController {
 			//	Map the data into more readable tuple
 			let allNames = nameResult.compactMap{(result) -> CategoryInfo? in
 				guard result.numberOfRanges == 4 else {
+					self.showSimpleAlert("Failed to extract categories")
 					return nil
 				}
 				
@@ -135,10 +138,9 @@ class DJMainTableViewController: UITableViewController {
 				}())
 			}
 			
-			DispatchQueue.main.async {
-				self.categories = allNames
-				self.djNavContorller?.hideLoading()
-			}
+			
+			self.categories = allNames
+			self.djNavContorller?.hideLoading()
 		}
 	}
 
@@ -256,13 +258,7 @@ class DJMainTableViewController: UITableViewController {
 				let repository = cell.repository,
 				repository.feedItems.count > 0 else
 			{
-				let alertController = UIAlertController(title: "", message: "There is no feed in this category now. Please check back later.", preferredStyle: .alert)
-				let action = UIAlertAction(title: "OK", style: .default) { _ in
-					alertController.dismiss(animated: true, completion: nil)
-				}
-				alertController.addAction(action)
-				
-				self.present(alertController, animated: true, completion: nil)
+				self.showSimpleAlert("There is no feed in this category now. Please check back later.")
 				return false
 			}
 			
